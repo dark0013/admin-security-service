@@ -1,4 +1,5 @@
 package com.darkross.adminsecurityservice.controller;
+
 import com.darkross.adminsecurityservice.dto.request.CreateUserRequest;
 import com.darkross.adminsecurityservice.service.UserService;
 import jakarta.validation.Valid;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Slf4j
-public class UserController  {
+public class UserController {
 
     private final UserService userService;
 
@@ -21,4 +22,13 @@ public class UserController  {
         log.info("Controller: creating user {}", request.getNombre());
         return ResponseEntity.ok("User created");
     }
+
+    /*
+    @PostMapping("/patients")
+    public ResponseEntity<Void> createPatient(@RequestBody PatientDto dto) {
+    Patient obj = patientService.create(dto);
+    return ResponseUtil.created(obj.getIdPatient());
+}
+
+    * */
 }
