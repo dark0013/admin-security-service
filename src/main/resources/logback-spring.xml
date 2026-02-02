@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <!-- ========================= -->
+    <!-- PROPIEDADES -->
+    <!-- ========================= -->
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"/>
+
+    <!-- ========================= -->
+    <!-- CONSOLA -->
+    <!-- ========================= -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- LOG GENERAL CON FECHA -->
+    <!-- ========================= -->
+    <appender name="APP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- ARCHIVO ACTIVO CON FECHA -->
+            <fileNamePattern>
+                ${LOG_PATH}/WsAdmin.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- LOG DE SEGURIDAD CON FECHA -->
+    <!-- ========================= -->
+    <appender name="SECURITY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- ARCHIVO ACTIVO CON FECHA -->
+            <fileNamePattern>
+                ${LOG_PATH}/WsAdminSecurity.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+
+            <maxHistory>60</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- LOGGERS -->
+    <!-- ========================= -->
+
+    <logger name="security" level="INFO" additivity="false">
+        <appender-ref ref="SECURITY_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="org.springframework.security" level="INFO" additivity="false">
+        <appender-ref ref="SECURITY_FILE"/>
+    </logger>
+
+    <!-- ========================= -->
+    <!-- ROOT -->
+    <!-- ========================= -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="APP_FILE"/>
+    </root>
+
+</configuration>
